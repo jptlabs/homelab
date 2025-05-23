@@ -1,7 +1,7 @@
 # Zipline Setup Guide
 
 > [!NOTE]
-> This is an overly simplified guide. Read the official setup guide [here](https://github.com/diced/zipline).
+> This is how __I__ set it up. Read the official setup guide [here](https://github.com/diced/zipline).
 >
 
 ## Usage
