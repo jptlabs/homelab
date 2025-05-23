@@ -1,7 +1,7 @@
 # Zipline Setup Guide
 
 > [!NOTE]
-> This is an overly simplified guide and it's also customized to __my__ use cases. Read the official setup guide [here](https://github.com/diced/zipline).
+> Read the official setup guide [here](https://github.com/diced/zipline).
 >
 
 ## Installing with Docker Compose
