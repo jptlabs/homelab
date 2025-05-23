@@ -43,6 +43,12 @@ services:
 volumes:
   pgdata:
 ```
+Create a docker-compose.yml file and paste the contents in or:
+
+```bash
+wget https://raw.githubusercontent.com/jptlabs/homelab/main/docker/zipline/docker-compose.yml
+```
+
 ## Generating Secrets
 
 ```bash
