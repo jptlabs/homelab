@@ -50,6 +50,10 @@ Create a docker-compose.yml file and paste the contents in, or run this command:
 wget https://raw.githubusercontent.com/jptlabs/homelab/main/docker/zipline/docker-compose.yml
 ```
 
+> [!NOTE]
+> Make sure that you change `/path/to/your/share` to wherever you want uploads to be stored. This can be a local folder or an smb/nfs share.
+> 
+
 ### Generating Secrets
 
 ```bash
