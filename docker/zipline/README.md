@@ -1,4 +1,4 @@
-# Generating Secrets
+# Setting up zipline
 
 This project provides a simple way to generate secure environment secrets using OpenSSL and save them to a `.env` file.
 
