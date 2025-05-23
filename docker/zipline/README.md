@@ -1,7 +1,7 @@
 # Zipline Setup Guide
 
 > [!NOTE]
-> Read the official setup guide [here](https://github.com/diced/zipline).
+> For a more-in-depth guide read the official documentation [here](https://github.com/diced/zipline).
 >
 
 ## Installing with Docker Compose
@@ -58,3 +58,11 @@ echo "CORE_SECRET=$(openssl rand -base64 42 | tr -dc A-Za-z0-9 | cut -c -32 | tr
 ```
 
 Without these variables zipline won't run.
+
+### Starting Zipline
+
+Now all you have to do is run this command to start the server:
+
+```bash
+docker compose up -d
+```
