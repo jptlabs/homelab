@@ -67,6 +67,8 @@ Now all you have to do is run this command to start the server:
 docker compose up -d
 ```
 
+You can now access zipline through `http://localhost:3000`
+
 ### Updating Zipline
 
 Pull the latest version of the image:
