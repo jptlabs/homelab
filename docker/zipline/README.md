@@ -43,15 +43,18 @@ services:
 volumes:
   pgdata:
 ```
-Create a docker-compose.yml file and paste the contents in or:
+
+Create a docker-compose.yml file and paste the contents in, or run this command:
 
 ```bash
 wget https://raw.githubusercontent.com/jptlabs/homelab/main/docker/zipline/docker-compose.yml
 ```
 
-## Generating Secrets
+### Generating Secrets
 
 ```bash
 echo "POSTGRESQL_PASSWORD=$(openssl rand -base64 42 | tr -dc A-Za-z0-9 | cut -c -32 | tr -d '\n')" > .env
 echo "CORE_SECRET=$(openssl rand -base64 42 | tr -dc A-Za-z0-9 | cut -c -32 | tr -d '\n')" >> .env
 ```
+
+Without these variables zipline won't run.
