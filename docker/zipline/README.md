@@ -1,10 +1,10 @@
 # Zipline Setup Guide
 
 > [!NOTE]
-> This is how __I__ set it up. Read the official setup guide [here](https://github.com/diced/zipline).
+> This is an overly simplified guide and it's also customized to __my__ use cases. Read the official setup guide [here](https://github.com/diced/zipline).
 >
 
-## Usage
+## Installing with Docker Compose
 
 Run the following commands in your terminal to generate a `.env` file with a PostgreSQL password and a core application secret:
 
