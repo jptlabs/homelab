@@ -66,3 +66,23 @@ Now all you have to do is run this command to start the server:
 ```bash
 docker compose up -d
 ```
+
+### Updating Zipline
+
+Pull the latest version of the image:
+
+```bash
+docker compose pull
+```
+
+Recreate and restart the container:
+
+```bash
+docker compose up -d
+```
+
+Clean up old images:
+
+```bash
+docker image prune -f
+```
