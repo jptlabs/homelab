@@ -6,8 +6,46 @@
 
 ## Installing with Docker Compose
 
-Run the following commands in your terminal to generate a `.env` file with a PostgreSQL password and a core application secret:
+```yml
+services:
+  postgresql:
+    image: postgres:16
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: ${POSTGRESQL_USER:-zipline}
+      POSTGRES_PASSWORD: ${POSTGRESQL_PASSWORD:?POSTGRESSQL_PASSWORD is required}
+      POSTGRES_DB: ${POSTGRESQL_DB:-zipline}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD', 'pg_isready', '-U', 'zipline']
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
-````bash
+  zipline:
+    image: ghcr.io/diced/zipline
+    ports:
+      - '3000:3000' # Change this as needed
+    env_file:
+      - .env
+    environment:
+      - DATABASE_URL=postgres://${POSTGRESQL_USER:-zipline}:${POSTGRESQL_PASSWORD}@postgresql:5432/${POSTGRESQL_DB:-zipline}
+    depends_on:
+      - postgresql
+    volumes:
+      - '/path/to/your/share:/zipline/uploads' # The path to your smb or nfs share
+      - './public:/zipline/public'
+      - './themes:/zipline/themes'
+
+volumes:
+  pgdata:
+```
+## Generating Secrets
+
+```bash
 echo "POSTGRESQL_PASSWORD=$(openssl rand -base64 42 | tr -dc A-Za-z0-9 | cut -c -32 | tr -d '\n')" > .env
 echo "CORE_SECRET=$(openssl rand -base64 42 | tr -dc A-Za-z0-9 | cut -c -32 | tr -d '\n')" >> .env
+```
