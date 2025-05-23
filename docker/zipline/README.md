@@ -1,6 +1,8 @@
-# Setting up zipline
+# Zipline Setup Guide
 
-This project provides a simple way to generate secure environment secrets using OpenSSL and save them to a `.env` file.
+> [!NOTE]
+> Read the official setup guide [here](https://github.com/diced/zipline).
+>
 
 ## Usage
 
