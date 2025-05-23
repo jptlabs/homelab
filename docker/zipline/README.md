@@ -69,7 +69,7 @@ docker compose up -d
 
 You should now be able to access zipline through `http://localhost:3000` or the port you specified.
 
-## Updating Zipline
+## Updating with Docker Compose
 
 Pull the latest version of the image:
 
