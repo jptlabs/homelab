@@ -18,7 +18,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRESQL_PASSWORD:?POSTGRESSQL_PASSWORD is required}
       POSTGRES_DB: ${POSTGRESQL_DB:-zipline}
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - /docker_volumes/zipline/pgdata:/var/lib/postgresql/data
     healthcheck:
       test: ['CMD', 'pg_isready', '-U', 'zipline']
       interval: 10s
@@ -26,9 +26,10 @@ services:
       retries: 5
 
   zipline:
-    image: ghcr.io/diced/zipline
+    image: ghcr.io/diced/zipline:latest
+    restart: unless-stopped
     ports:
-      - '3000:3000' # Change this as needed
+      - '3000:3000'
     env_file:
       - .env
     environment:
@@ -36,12 +37,10 @@ services:
     depends_on:
       - postgresql
     volumes:
-      - '/path/to/your/share:/zipline/uploads' # The path to your smb or nfs share
-      - './public:/zipline/public'
-      - './themes:/zipline/themes'
+      - '/path/to/your/share:/zipline/uploads'
+      - '/docker_volumes/zipline/public:/zipline/public'
+      - '/docker_volumes/zipline/themes:/zipline/themes'
 
-volumes:
-  pgdata:
 ```
 
 Create a docker-compose.yml file and paste the contents in, or run this command:
@@ -49,6 +48,8 @@ Create a docker-compose.yml file and paste the contents in, or run this command:
 ```bash
 wget https://raw.githubusercontent.com/jptlabs/homelab/main/docker/zipline/docker-compose.yml
 ```
+
+Configure things like ports, volumes, or anything else as needed.
 
 > [!NOTE]
 > Make sure that you change `/path/to/your/share` to wherever you want uploads to be stored. This can be a local folder or an smb/nfs share.
@@ -63,7 +64,7 @@ echo "POSTGRESQL_PASSWORD=$(openssl rand -base64 42 | tr -dc A-Za-z0-9 | cut -c 
 echo "CORE_SECRET=$(openssl rand -base64 42 | tr -dc A-Za-z0-9 | cut -c -32 | tr -d '\n')" >> .env
 ```
 
-Without these variables zipline won't run.
+Without these variables zipline won't run. Alternatively you can create these values yourself.
 
 ### Starting Zipline
 

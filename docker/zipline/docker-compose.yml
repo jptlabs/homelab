@@ -9,7 +9,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRESQL_PASSWORD:?POSTGRESSQL_PASSWORD is required}
       POSTGRES_DB: ${POSTGRESQL_DB:-zipline}
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - /docker_volumes/zipline/pgdata:/var/lib/postgresql/data
     healthcheck:
       test: ['CMD', 'pg_isready', '-U', 'zipline']
       interval: 10s
@@ -17,9 +17,10 @@ services:
       retries: 5
 
   zipline:
-    image: ghcr.io/diced/zipline
+    image: ghcr.io/diced/zipline:latest
+    restart: unless-stopped
     ports:
-      - '3000:3000' # Change this as needed
+      - '3080:3000'
     env_file:
       - .env
     environment:
@@ -27,9 +28,6 @@ services:
     depends_on:
       - postgresql
     volumes:
-      - '/path/to/your/share:/zipline/uploads' # The path to your smb or nfs share
-      - './public:/zipline/public'
-      - './themes:/zipline/themes'
-
-volumes:
-  pgdata:
+      - '/mnt/zipline_uploads:/zipline/uploads'
+      - '/docker_volumes/zipline/public:/zipline/public'
+      - '/docker_volumes/zipline/themes:/zipline/themes'
