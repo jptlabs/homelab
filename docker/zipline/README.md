@@ -49,7 +49,7 @@ Create a docker-compose.yml file and paste the contents in, or run this command:
 wget https://raw.githubusercontent.com/jptlabs/homelab/main/docker/zipline/docker-compose.yml
 ```
 
-Configure things like ports, volumes, or anything else as needed.
+Configure ports, volumes, or anything else as needed.
 
 > [!NOTE]
 > Make sure that you change `/path/to/your/share` to wherever you want uploads to be stored. This can be a local folder or an smb/nfs share.
@@ -95,3 +95,37 @@ Clean up old images:
 ```bash
 docker image prune -f
 ```
+
+## Traefik configuration
+
+```yaml
+# HTTPS Proxy for Zipline with HTTP to HTTPS redirection
+http:
+  middlewares:
+    https-redirectscheme:
+      redirectScheme:
+        scheme: https
+        permanent: true
+  routers:
+    zipline-redirect:
+      entryPoints:
+        - "http"
+      rule: "Host(`zipline.domain.tld`)"
+      middlewares:
+        - https-redirectscheme
+      service: noop@internal # Dummy service to handle redirection
+    zipline:
+      entryPoints:
+        - "https"
+      rule: "Host(`zipline.domain.tld`)"
+      tls: {}
+      service: zipline
+  services:
+    zipline:
+      loadBalancer:
+        servers:
+          - url: "http://hostip:3000"
+        passHostHeader: true
+```
+
+Alternatively you can use [labels](https://doc.traefik.io/traefik/providers/docker/#routing-configuration-with-labels) if Zipline runs on the same instance as Traefik.
